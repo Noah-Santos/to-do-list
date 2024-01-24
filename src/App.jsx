@@ -7,7 +7,7 @@ function App() {
 
 
   return (
-    <div>
+    <div className='bodySection'>
       <Category categors={category}/>
     </div>
   );
