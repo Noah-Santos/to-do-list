@@ -12,12 +12,14 @@ const Create = (tasks, categors) => {
 
     // updates the categories
     function reducerCategories(state, action){
-        let newList = [...state, action.category];
-        return {newList};
+        console.log(state.categories)
+        let arr = [...state.categories] || [];
+        console.log(arr)
+        return {categories: arr.push(action.newCategory)};
     }
 
     const [state, dispatch] = useReducer(reducer, tasks);
-    const [categories, change] = useReducer(reducerCategories, categors);
+    const [categories, change] = useReducer(reducerCategories, (categors || []));
 
     return (
         <>
