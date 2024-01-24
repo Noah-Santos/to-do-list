@@ -1,19 +1,14 @@
+// import {useReducer} from 'react';
+import Create from './Components/Create';
+
 function App() {
+  let task = (localStorage.getItem('tasks') || []);
+  let category = (localStorage.getItem('categories') || []);
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Create tasks={task} categors={category}/>
     </div>
   );
 }
