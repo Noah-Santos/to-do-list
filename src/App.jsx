@@ -1,14 +1,14 @@
 // import {useReducer} from 'react';
-import Create from './Components/Create';
+import Category from './Components/Category';
 
 function App() {
   let task = (localStorage.getItem('tasks') || []);
-  let category = (localStorage.getItem('categories') || []);
+  let category = (localStorage.getItem('categories') || ['sure']);
 
 
   return (
     <div>
-      <Create tasks={task} categors={category}/>
+      <Category categors={category}/>
     </div>
   );
 }
