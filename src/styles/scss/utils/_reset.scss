@@ -1,0 +1,21 @@
+// resets all spacing on document and changes font
+* {
+    margin: 0;
+    padding: 0;
+    font-family: batman2;
+    // color: rgb(151, 151, 151);
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body,
+html {
+    height: 100%;
+    width: 100%;
+}
+
+// gets rid of the scrollbar
+body {
+    // overflow: hidden;
+    background-color: rgb(95, 95, 95);
+}
