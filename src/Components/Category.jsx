@@ -8,22 +8,22 @@ const Category = (categors) => {
   function reducer(state, action){
     console.log(state)
     console.log(action.newCat)
+    // creates the category
     if(action.type === 'create'){
       // sessionStorage.setItem('categories', [...state, action.newCat])
       return [...state, action.newCat];
     }
+    // edits the category
     if(action.type === 'edit'){
-      let id = state.findIndex(c=> {
-        console.log(c)
-        console.log(action.oldCat)
-        if(c === action.oldCat){
-          return c
-        }
-      });
-      console.log(id)
-      state[id] = action.editCat;
+      state[action.oldCat] = action.editCat;
       // sessionStorage.setItem('categories', [...state]);
       return [...state];
+    }
+    // deletes the category
+    if(action.type === 'delete'){
+      let newCats = state.filter((c, i)=> i != action.removeCat);
+      console.log(newCats)
+      return [...newCats];
     }
   }
 
@@ -34,12 +34,26 @@ const Category = (categors) => {
   const editing = useRef(null);
   const old = useRef(null);
 
-  function createCat(e){
+  // calls reducer function to create a category
+  function createCat(){
     dispatch({type: 'create', newCat: creating.current.value});
+    creating.current.value = '';
   }
 
-  function editCat(e){
+  // calls reducer function to edit the category
+  function editCat(){
     dispatch({type: 'edit', editCat: editing.current.value, oldCat: old.current.value});
+  }
+
+  // calls reducer function to delete the category
+  function deleteCat(){
+    dispatch({type: 'delete', removeCat: old.current.value});
+  }
+
+  // everytime a new dropdown is chosen, update the input element
+  function updateEdit(){
+    console.log(old.current.value);
+    editing.current.value = state[old.current.value];
   }
 
   return (
@@ -69,15 +83,15 @@ const Category = (categors) => {
                 <div className="editCat">
                   <label htmlFor="categories">Choose a Category:</label>
 
-                  <select name="categories" id="categories" ref={old}>
+                  <select name="categories" id="categories" ref={old} onChange={updateEdit}>
                     {state.map((category, i)=>{
                       return(
-                        <option value={category} key={i}>{category}</option>
+                        <option value={i} key={i}>{category}</option>
                       )
                     })}
                   </select>
-                  <input placeholder='Edit' ref={editing}/>
-                  <button onClick={editCat}>Edit Category</button>
+                  <input placeholder='Edit' ref={editing} onChange={editCat} value={state[0]}/>
+                  <button onClick={deleteCat}>Delete Category</button>
                 </div>
               }
             </div>

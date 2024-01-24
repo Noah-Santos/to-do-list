@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Task = () => {
+const Task = (tasks) => {
   return (
     <div>Task</div>
   )
