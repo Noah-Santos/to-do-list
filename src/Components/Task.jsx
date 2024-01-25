@@ -2,7 +2,7 @@ import {useReducer, useState, useRef} from 'react';
 import { FaCirclePlus } from "react-icons/fa6";
 import { IoCloseCircle } from "react-icons/io5";
 
-const Task = (tasks, categors) => {
+const Task = (tasks) => {
   const cat = useRef(null)
   cat.current = (JSON.parse(sessionStorage.getItem('categories')));
   console.log(cat.current)
@@ -11,7 +11,7 @@ const Task = (tasks, categors) => {
   function reducer(state, action){
     // creates the task
     if(action.type === 'create'){
-      let newTask = {name: action.tasName, category: action.tasCat, description: action.tasDesc}
+      let newTask = {name: action.tasName, category: cat.current[action.tasCat], description: action.tasDesc}
       sessionStorage.setItem('tasks', JSON.stringify([...state, newTask]));
       return [...state, newTask];
     }
@@ -60,8 +60,6 @@ const Task = (tasks, categors) => {
 
   // calls reducer function to edit the task
   function editTask(){
-    console.log('index: ' + editCat.current.value)
-    console.log(editCat.current)
     dispatch({type: 'edit', changeName: editName.current.value, changeCat: editCat.current.value, changeDesc: editDesc.current.value, oldTas: old.current.value});
   }
 
@@ -102,7 +100,16 @@ const Task = (tasks, categors) => {
                 <div className="createCat">
                   <input ref={createName} placeholder='Name'/>
                   <input ref={createDesc} placeholder='Description'/>
-                  <input ref={createCat} placeholder='Category'/>
+                  {/* <input ref={createCat} placeholder='Category'/> */}
+                  <label htmlFor="categories">Choose a Category:</label>
+
+                  <select name="categories" id="categories" ref={createCat}>
+                    {cat.current.map((t, i)=>{
+                      return(
+                        <option value={i} key={i}>{t}</option>
+                      )
+                    })}
+                  </select>
                   <button onClick={createTask}>Create Task</button>
                   {state.map((t, i)=>{
                     return (
