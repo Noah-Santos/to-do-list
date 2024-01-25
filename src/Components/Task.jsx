@@ -3,11 +3,10 @@ import { FaCirclePlus } from "react-icons/fa6";
 import { IoCloseCircle } from "react-icons/io5";
 
 const Task = (tasks, categors) => {
-  console.log(categors)
-  console.log(JSON.parse(sessionStorage.getItem('categories')))
   const cat = useRef(null)
   cat.current = (JSON.parse(sessionStorage.getItem('categories')));
   console.log(cat.current)
+  console.log(cat.current[0])
   
   function reducer(state, action){
     // creates the task
@@ -61,7 +60,8 @@ const Task = (tasks, categors) => {
 
   // calls reducer function to edit the task
   function editTask(){
-    console.log(editCat.current.value)
+    console.log('index: ' + editCat.current.value)
+    console.log(editCat.current)
     dispatch({type: 'edit', changeName: editName.current.value, changeCat: editCat.current.value, changeDesc: editDesc.current.value, oldTas: old.current.value});
   }
 
@@ -75,8 +75,13 @@ const Task = (tasks, categors) => {
 
   // everytime a new dropdown is chosen, update the input element
   function updateEdit(){
+  for(let i = 0; i < cat.current.length; i++){
+    if(cat.current[i] === state[old.current.value].category){
+      editCat.current.value = i;
+    }
+  }
     editName.current.value = state[old.current.value].name;
-    editCat.current.value = state[old.current.value].category;
+    // editCat.current.value = old.current.value;
     editDesc.current.value = state[old.current.value].description;
   }
 
@@ -116,12 +121,12 @@ const Task = (tasks, categors) => {
                     })}
                   </select>
 
-                  <input placeholder='Edit' ref={editName} onChange={editTask}/>
+                  <input placeholder='New Name' ref={editName} onChange={editTask}/>
                   {/* <input placeholder='Edit' ref={editCat} onChange={editTask}/> */}
-                  <input placeholder='Edit' ref={editDesc} onChange={editTask}/>
+                  <input placeholder='New Description' ref={editDesc} onChange={editTask}/>
                   <label htmlFor="categories">Choose a Category:</label>
 
-                  <select name="categories" id="categories" ref={editCat} onChange={()=>{updateEdit(); editTask();}}>
+                  <select name="categories" id="categories" ref={editCat} onChange={editTask}>
                     {cat.current.map((t, i)=>{
                       return(
                         <option value={i} key={i}>{t}</option>
