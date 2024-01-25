@@ -2,12 +2,8 @@ import {useReducer, useRef, useState} from 'react';
 import { FaCirclePlus } from "react-icons/fa6";
 
 const Category = (categors) => {
-  console.log(categors)
-  console.log(categors.categors)
 
   function reducer(state, action){
-    console.log(state)
-    console.log(action.newCat)
     // creates the category
     if(action.type === 'create'){
       // sessionStorage.setItem('categories', [...state, action.newCat])
@@ -22,7 +18,6 @@ const Category = (categors) => {
     // deletes the category
     if(action.type === 'delete'){
       let newCats = state.filter((c, i)=> i != action.removeCat);
-      console.log(newCats)
       return [...newCats];
     }
   }
@@ -36,7 +31,9 @@ const Category = (categors) => {
 
   // calls reducer function to create a category
   function createCat(){
-    dispatch({type: 'create', newCat: creating.current.value});
+    if(creating.current.value){
+      dispatch({type: 'create', newCat: creating.current.value});
+    }
     creating.current.value = '';
   }
 
@@ -48,6 +45,7 @@ const Category = (categors) => {
   // calls reducer function to delete the category
   function deleteCat(){
     dispatch({type: 'delete', removeCat: old.current.value});
+    editing.current.value = state[0];
   }
 
   // everytime a new dropdown is chosen, update the input element
@@ -90,7 +88,7 @@ const Category = (categors) => {
                       )
                     })}
                   </select>
-                  <input placeholder='Edit' ref={editing} onChange={editCat} value={state[0]}/>
+                  <input placeholder='Edit' ref={editing} onChange={editCat}/>
                   <button onClick={deleteCat}>Delete Category</button>
                 </div>
               }

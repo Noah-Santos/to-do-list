@@ -2,10 +2,8 @@ import {useReducer, useState, useRef} from 'react';
 import { FaCirclePlus } from "react-icons/fa6";
 
 const Task = (tasks) => {
-  console.log(tasks)
+
   function reducer(state, action){
-    console.log(state)
-    console.log(action.newTas)
     // creates the task
     if(action.type === 'create'){
       // sessionStorage.setItem('categories', [...state, action.newCat])
@@ -13,53 +11,63 @@ const Task = (tasks) => {
       return [...state, newTask];
     }
     // edits the task
-    // if(action.type === 'edit'){
-    //   state[action.oldTas] = action.editTas;
-    //   // sessionStorage.setItem('categories', [...state]);
-    //   return [...state];
-    // }
-    // // deletes the task
-    // if(action.type === 'delete'){
-    //   let newTasks = state.filter((c, i)=> i != action.removeTas);
-    //   console.log(newTasks)
-    //   return [...newTasks];
-    // }
+    if(action.type === 'edit'){
+      state[action.oldTas] = {name: action.changeName, category: action.changeCat, description: action.changeDesc}
+      // sessionStorage.setItem('categories', [...state]);
+      return [...state];
+    }
+    // deletes the task
+    if(action.type === 'delete'){
+      let newTasks = state.filter((c, i)=> i != action.removeTas);
+      return [...newTasks];
+    }
+    return [...state];
   }
 
   const [state, dispatch] = useReducer(reducer, tasks.tasks);
   const [panel, setPanel] = useState(false);
   const [createForm, setCreateForm] = useState(true);
+  const old = useRef(null);
   const createName = useRef(null);
   const createCat = useRef(null);
   const createDesc = useRef(null);
+  const editName = useRef(null);
+  const editCat = useRef(null);
+  const editDesc = useRef(null);
 
   // calls reducer function to create a task
   function createTask(){
-    dispatch({type: 'create', tasName: createName.current.value, tasCat: createCat.current.value, tasDesc: createDesc.current.value});
+    if(createName.current.value && createCat.current.value && createDesc.current.value){
+      dispatch({type: 'create', tasName: createName.current.value, tasCat: createCat.current.value, tasDesc: createDesc.current.value});
+    }
     createName.current.value = '';
     createCat.current.value = '';
     createDesc.current.value = '';
   }
 
-  // // calls reducer function to edit the task
-  // function editTask(){
-  //   dispatch({type: 'edit', editTas: editing.current.value, oldTas: old.current.value});
-  // }
+  // calls reducer function to edit the task
+  function editTask(){
+    dispatch({type: 'edit', changeName: editName.current.value, changeName: editName.current.value, changeCat: editCat.current.value, changeDesc: editDesc.current.value, oldTas: old.current.value});
+  }
 
-  // // calls reducer function to delete the task
-  // function deleteTask(){
-  //   dispatch({type: 'delete', removeTas: old.current.value});
-  // }
+  // calls reducer function to delete the task
+  function deleteTask(){
+    dispatch({type: 'delete', removeTas: old.current.value});
+    editName.current.value = state[0].name;
+    editCat.current.value = state[0].category;
+    editDesc.current.value = state[0].description;
+  }
 
-  // // everytime a new dropdown is chosen, update the input element
-  // function updateEdit(){
-  //   console.log(old.current.value);
-  //   editing.current.value = state[old.current.value];
-  // }
+  // everytime a new dropdown is chosen, update the input element
+  function updateEdit(){
+    editName.current.value = state[old.current.value].name;
+    editCat.current.value = state[old.current.value].category;
+    editDesc.current.value = state[old.current.value].description;
+  }
 
   return (
     <>
-    {/* hides the category form until the plus button is clicked */}
+    {/* hides the task form until the plus button is clicked */}
       {!panel ? <FaCirclePlus onClick={()=>setPanel(true)}/> : 
         <>
           <section className='categorySection'>
@@ -68,7 +76,7 @@ const Task = (tasks) => {
                 <button onClick={()=>setCreateForm(true)}>Create</button>
                 <button onClick={()=>setCreateForm(false)}>Edit</button>
               </div>
-              {/* determines whether or not to show the create category page or the edit category page */}
+              {/* determines whether or not to show the create task page or the edit task page */}
               {createForm ? 
                 <div className="createCat">
                   <input ref={createName} placeholder='Name'/>
@@ -82,7 +90,19 @@ const Task = (tasks) => {
                   })}
                 </div> :
                 <div className="editCat">
-                  
+                  <label htmlFor="categories">Choose a Category:</label>
+
+                  <select name="categories" id="categories" ref={old} onChange={updateEdit}>
+                    {state.map((t, i)=>{
+                      return(
+                        <option value={i} key={i}>{t.name}</option>
+                      )
+                    })}
+                  </select>
+                  <input placeholder='Edit' ref={editName} onChange={editTask}/>
+                  <input placeholder='Edit' ref={editCat} onChange={editTask}/>
+                  <input placeholder='Edit' ref={editDesc} onChange={editTask}/>
+                  <button onClick={deleteTask}>Delete Category</button>
                 </div>
               }
             </div>
