@@ -1,23 +1,25 @@
 import {useReducer, useRef, useState} from 'react';
 import { FaCirclePlus } from "react-icons/fa6";
+import { IoCloseCircle } from "react-icons/io5";
 
 const Category = (categors) => {
-
+  
   function reducer(state, action){
     // creates the category
     if(action.type === 'create'){
-      // sessionStorage.setItem('categories', [...state, action.newCat])
+      sessionStorage.setItem('categories', JSON.stringify([...state, action.newCat]));
       return [...state, action.newCat];
     }
     // edits the category
     if(action.type === 'edit'){
       state[action.oldCat] = action.editCat;
-      // sessionStorage.setItem('categories', [...state]);
+      sessionStorage.setItem('categories', JSON.stringify([...state]));
       return [...state];
     }
     // deletes the category
     if(action.type === 'delete'){
-      let newCats = state.filter((c, i)=> i != action.removeCat);
+      let newCats = state.filter((c, i)=> Number(i) !== Number(action.removeCat));
+      sessionStorage.setItem('categories', JSON.stringify([...newCats]));
       return [...newCats];
     }
   }
@@ -44,6 +46,7 @@ const Category = (categors) => {
 
   // calls reducer function to delete the category
   function deleteCat(){
+    console.log(old.current.value)
     dispatch({type: 'delete', removeCat: old.current.value});
     editing.current.value = state[0];
   }
@@ -60,6 +63,7 @@ const Category = (categors) => {
       {!panel ? <FaCirclePlus onClick={()=>setPanel(true)}/> : 
         <>
           <section className='categorySection'>
+            <IoCloseCircle onClick={()=>setPanel(false)}></IoCloseCircle>
             <div className="categoryCont">
               <div className="categoryBtn">
                 <button onClick={()=>setCreateForm(true)}>Create</button>

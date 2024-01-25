@@ -1,24 +1,26 @@
 import {useReducer, useState, useRef} from 'react';
 import { FaCirclePlus } from "react-icons/fa6";
+import { IoCloseCircle } from "react-icons/io5";
 
-const Task = (tasks) => {
-
+const Task = (tasks, categors) => {
+  console.log(categors)
+  console.log('tasks: ' + tasks)
   function reducer(state, action){
     // creates the task
     if(action.type === 'create'){
-      // sessionStorage.setItem('categories', [...state, action.newCat])
       let newTask = {name: action.tasName, category: action.tasCat, description: action.tasDesc}
+      sessionStorage.setItem('tasks', JSON.stringify([...state, newTask]));
       return [...state, newTask];
     }
     // edits the task
     if(action.type === 'edit'){
       state[action.oldTas] = {name: action.changeName, category: action.changeCat, description: action.changeDesc}
-      // sessionStorage.setItem('categories', [...state]);
+      sessionStorage.setItem('tasks', JSON.stringify([...state]));
       return [...state];
     }
     // deletes the task
     if(action.type === 'delete'){
-      let newTasks = state.filter((c, i)=> i != action.removeTas);
+      let newTasks = state.filter((c, i)=> i !== action.removeTas);
       return [...newTasks];
     }
     return [...state];
@@ -47,7 +49,7 @@ const Task = (tasks) => {
 
   // calls reducer function to edit the task
   function editTask(){
-    dispatch({type: 'edit', changeName: editName.current.value, changeName: editName.current.value, changeCat: editCat.current.value, changeDesc: editDesc.current.value, oldTas: old.current.value});
+    dispatch({type: 'edit', changeName: editName.current.value, changeCat: editCat.current.value, changeDesc: editDesc.current.value, oldTas: old.current.value});
   }
 
   // calls reducer function to delete the task
@@ -71,6 +73,7 @@ const Task = (tasks) => {
       {!panel ? <FaCirclePlus onClick={()=>setPanel(true)}/> : 
         <>
           <section className='categorySection'>
+            <IoCloseCircle onClick={()=>setPanel(false)}></IoCloseCircle>
             <div className="categoryCont">
               <div className="categoryBtn">
                 <button onClick={()=>setCreateForm(true)}>Create</button>
@@ -80,8 +83,8 @@ const Task = (tasks) => {
               {createForm ? 
                 <div className="createCat">
                   <input ref={createName} placeholder='Name'/>
-                  <input ref={createCat} placeholder='Category'/>
                   <input ref={createDesc} placeholder='Description'/>
+                  <input ref={createCat} placeholder='Category'/>
                   <button onClick={createTask}>Create Task</button>
                   {state.map((t, i)=>{
                     return (
@@ -90,18 +93,18 @@ const Task = (tasks) => {
                   })}
                 </div> :
                 <div className="editCat">
+                  <input placeholder='Edit' ref={editName} onChange={editTask}/>
+                  {/* <input placeholder='Edit' ref={editCat} onChange={editTask}/> */}
+                  <input placeholder='Edit' ref={editDesc} onChange={editTask}/>
                   <label htmlFor="categories">Choose a Category:</label>
 
-                  <select name="categories" id="categories" ref={old} onChange={updateEdit}>
-                    {state.map((t, i)=>{
+                  <select name="categories" id="categories" ref={old} onChange={()=>{updateEdit(); editTask();}}>
+                    {categors.categors.map((t, i)=>{
                       return(
                         <option value={i} key={i}>{t.name}</option>
                       )
                     })}
                   </select>
-                  <input placeholder='Edit' ref={editName} onChange={editTask}/>
-                  <input placeholder='Edit' ref={editCat} onChange={editTask}/>
-                  <input placeholder='Edit' ref={editDesc} onChange={editTask}/>
                   <button onClick={deleteTask}>Delete Category</button>
                 </div>
               }
