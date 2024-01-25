@@ -4,7 +4,11 @@ import { IoCloseCircle } from "react-icons/io5";
 
 const Task = (tasks, categors) => {
   console.log(categors)
-  console.log('tasks: ' + tasks)
+  console.log(JSON.parse(sessionStorage.getItem('categories')))
+  const cat = useRef(null)
+  cat.current = (JSON.parse(sessionStorage.getItem('categories')));
+  console.log(cat.current)
+  
   function reducer(state, action){
     // creates the task
     if(action.type === 'create'){
@@ -14,16 +18,24 @@ const Task = (tasks, categors) => {
     }
     // edits the task
     if(action.type === 'edit'){
-      state[action.oldTas] = {name: action.changeName, category: action.changeCat, description: action.changeDesc}
+      console.log(action.changeCat)
+      console.log(cat.current)
+      console.log(cat.current[action.changeCat])
+      state[action.oldTas] = {name: action.changeName, category: cat.current[action.changeCat], description: action.changeDesc}
       sessionStorage.setItem('tasks', JSON.stringify([...state]));
       return [...state];
     }
     // deletes the task
     if(action.type === 'delete'){
-      let newTasks = state.filter((c, i)=> i !== action.removeTas);
+      let newTasks = state.filter((c, i)=> Number(i) !== Number(action.removeTas));
+      sessionStorage.setItem('tasks', JSON.stringify([...newTasks]));
       return [...newTasks];
     }
     return [...state];
+  }
+
+  function first(){
+
   }
 
   const [state, dispatch] = useReducer(reducer, tasks.tasks);
@@ -49,6 +61,7 @@ const Task = (tasks, categors) => {
 
   // calls reducer function to edit the task
   function editTask(){
+    console.log(editCat.current.value)
     dispatch({type: 'edit', changeName: editName.current.value, changeCat: editCat.current.value, changeDesc: editDesc.current.value, oldTas: old.current.value});
   }
 
@@ -93,15 +106,25 @@ const Task = (tasks, categors) => {
                   })}
                 </div> :
                 <div className="editCat">
+                  <label htmlFor="categories">Choose a Task:</label>
+
+                  <select name="categories" id="categories" ref={old} onChange={updateEdit}>
+                    {state.map((t, i)=>{
+                      return(
+                        <option value={i} key={i}>{t.name}</option>
+                      )
+                    })}
+                  </select>
+
                   <input placeholder='Edit' ref={editName} onChange={editTask}/>
                   {/* <input placeholder='Edit' ref={editCat} onChange={editTask}/> */}
                   <input placeholder='Edit' ref={editDesc} onChange={editTask}/>
                   <label htmlFor="categories">Choose a Category:</label>
 
-                  <select name="categories" id="categories" ref={old} onChange={()=>{updateEdit(); editTask();}}>
-                    {categors.categors.map((t, i)=>{
+                  <select name="categories" id="categories" ref={editCat} onChange={()=>{updateEdit(); editTask();}}>
+                    {cat.current.map((t, i)=>{
                       return(
-                        <option value={i} key={i}>{t.name}</option>
+                        <option value={i} key={i}>{t}</option>
                       )
                     })}
                   </select>
