@@ -21,7 +21,7 @@ const Task = (tasks) => {
     }
     // deletes the task
     if(action.type === 'delete'){
-      let newTasks = state.filter((c, i)=> Number(i) !== Number(action.removeTas-1));
+      let newTasks = state.filter((c, i)=> Number(i) !== Number(action.removeTas));
       // updates storage variable
       sessionStorage.setItem('tasks', JSON.stringify([...newTasks]));
       return [...newTasks];
@@ -60,7 +60,12 @@ const Task = (tasks) => {
     dispatch({type: 'delete', removeTas: old.current.value});
     // resets inputs
     editName.current.value = state[0].name;
-    editCat.current.value = state[0].category;
+    // editCat.current.value = 0;
+    for(let i = 0; i < cat.current.length; i++){
+      if(cat.current[i] === state[0].category){
+        editCat.current.value = i+1;
+      }
+    }
     editDesc.current.value = state[0].description;
   }
 

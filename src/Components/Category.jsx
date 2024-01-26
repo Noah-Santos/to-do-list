@@ -27,7 +27,7 @@ const Category = (categors) => {
 
       // removes the deleted category from any task that had the category
       let newTasks = tasks.current.map(task=>{
-        if(task.category == state[action.removeCat]){
+        if(task.category === state[action.removeCat]){
           task = {name: task.name, description: task.description, category: 'none'};
         }
         return task;
@@ -39,7 +39,6 @@ const Category = (categors) => {
   }
 
   const [state, dispatch] = useReducer(reducer, categors.categors);
-  const [panel, setPanel] = useState(false);
   const [createForm, setCreateForm] = useState(true);
   const creating = useRef(null);
   const editing = useRef(null);

@@ -31,16 +31,16 @@ function App() {
 
         <button onClick={()=>setSort(true)}>Sort by Category</button>
         <button onClick={()=>setSort(false)}>Unsort</button>
-        <Item tasks={task} categors={category} type={sort}></Item>
+        {/* <Item tasks={task} categors={category} type={sort}></Item> */}
         {/* determines whether or not to sort the tasks by category */}
-        {/* {sort ? 
+        {sort ? 
           <div>
-            <Item tasks={task} categors={category} type={sort}></Item>
+            <Item tasks={task} categors={category} type={true}></Item>
           </div> : 
           <div>
-            <Item tasks={task} categors={category} type={sort}></Item>
+            <Item tasks={task} categors={category} type={false}></Item>
           </div>
-        } */}
+        }
         {/* {task.map((t, i)=>{
           return (
             <Item key={i} tasks={t}></Item>
