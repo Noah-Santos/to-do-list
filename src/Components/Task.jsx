@@ -9,7 +9,7 @@ const Task = (tasks) => {
   function reducer(state, action){
     // creates the task
     if(action.type === 'create'){
-      let newTask = {name: action.tasName, category: cat.current[action.tasCat], description: action.tasDesc}
+      let newTask = {name: action.tasName, category: cat.current[action.tasCat-1], description: action.tasDesc}
       sessionStorage.setItem('tasks', JSON.stringify([...state, newTask]));
       return [...state, newTask];
     }
@@ -18,13 +18,13 @@ const Task = (tasks) => {
       console.log(action.changeCat)
       console.log(cat.current)
       console.log(cat.current[action.changeCat])
-      state[action.oldTas] = {name: action.changeName, category: cat.current[action.changeCat], description: action.changeDesc}
+      state[action.oldTas] = {name: action.changeName, category: cat.current[action.changeCat-1], description: action.changeDesc}
       sessionStorage.setItem('tasks', JSON.stringify([...state]));
       return [...state];
     }
     // deletes the task
     if(action.type === 'delete'){
-      let newTasks = state.filter((c, i)=> Number(i) !== Number(action.removeTas));
+      let newTasks = state.filter((c, i)=> Number(i) !== Number(action.removeTas-1));
       sessionStorage.setItem('tasks', JSON.stringify([...newTasks]));
       return [...newTasks];
     }
@@ -98,9 +98,10 @@ const Task = (tasks) => {
                   <label htmlFor="categories">Choose a Category:</label>
 
                   <select name="categories" id="categories" ref={createCat}>
+                    <option value={0}>none</option>
                     {cat.current.map((t, i)=>{
                       return(
-                        <option value={i} key={i}>{t}</option>
+                        <option value={i+1} key={i}>{t}</option>
                       )
                     })}
                   </select>
@@ -128,9 +129,10 @@ const Task = (tasks) => {
                   <label htmlFor="categories">Choose a Category:</label>
 
                   <select name="categories" id="categories" ref={editCat} onChange={editTask}>
+                    <option value={0}>none</option>
                     {cat.current.map((t, i)=>{
                       return(
-                        <option value={i} key={i}>{t}</option>
+                        <option value={i+1} key={i}>{t}</option>
                       )
                     })}
                   </select>
