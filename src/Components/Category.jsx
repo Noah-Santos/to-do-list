@@ -6,7 +6,6 @@ const Category = (categors) => {
   // const [tasks, setTasks] = useState(JSON.parse(sessionStorage.getItem('tasks')) || [{name: 'sure', category: "sure", description: 'this is a test'}])
   const tasks = useRef(null);
   tasks.current = JSON.parse(sessionStorage.getItem('tasks')) || [{name: 'sure', category: "none", description: 'this is a test'}];
-  console.log(tasks.current)
   
   function reducer(state, action){
     // creates the category
@@ -26,19 +25,12 @@ const Category = (categors) => {
       sessionStorage.setItem('categories', JSON.stringify([...newCats]));
 
       // removes the deleted category from any task that had the category
-      console.log('cat: ' + state[action.removeCat])
-      console.log(tasks.current)
       let newTasks = tasks.current.map(task=>{
-        console.log(task)
-        console.log("task: " + task.category)
         if(task.category == state[action.removeCat]){
           task = {name: task.name, description: task.description, category: 'none'};
         }
-        console.log(task)
         return task;
       })
-      console.log('upcoming')
-      console.log(newTasks)
       sessionStorage.setItem('tasks', JSON.stringify([...newTasks]));
       return [...newCats];
     }
@@ -66,24 +58,22 @@ const Category = (categors) => {
 
   // calls reducer function to delete the category
   function deleteCat(){
-    console.log(old.current.value)
     dispatch({type: 'delete', removeCat: old.current.value});
     editing.current.value = state[0];
   }
 
   // everytime a new dropdown is chosen, update the input element
   function updateEdit(){
-    console.log(old.current.value);
     editing.current.value = state[old.current.value];
   }
 
   return (
     <>
     {/* hides the category form until the plus button is clicked */}
-      {!panel ? <FaCirclePlus onClick={()=>setPanel(true)}/> : 
+      {/* {!panel ? <FaCirclePlus onClick={()=>setPanel(true)}/> :  */}
         <>
           <section className='categorySection'>
-            <IoCloseCircle onClick={()=>setPanel(false)}></IoCloseCircle>
+            {/* <IoCloseCircle onClick={()=>setPanel(false)}></IoCloseCircle> */}
             <div className="categoryCont">
               <div className="categoryBtn">
                 <button onClick={()=>setCreateForm(true)}>Create</button>
@@ -118,7 +108,8 @@ const Category = (categors) => {
               }
             </div>
           </section>
-        </>}      
+        </>
+      {/* }       */}
     </>
   )
 }

@@ -9,16 +9,18 @@ const Task = (tasks) => {
   function reducer(state, action){
     // creates the task
     if(action.type === 'create'){
-      let newTask = {name: action.tasName, category: cat.current[action.tasCat-1], description: action.tasDesc}
+      let newTask = {name: action.tasName, category: (cat.current[action.tasCat-1] || 'none'), description: action.tasDesc}
+      // checks for a none category
+      // if(Number(action.tasCat) === 0){
+      //   newTask = {...newTask, category: 'none'}
+      // }
       sessionStorage.setItem('tasks', JSON.stringify([...state, newTask]));
       return [...state, newTask];
     }
     // edits the task
     if(action.type === 'edit'){
       console.log(action.changeCat)
-      console.log(cat.current)
-      console.log(cat.current[action.changeCat])
-      state[action.oldTas] = {name: action.changeName, category: cat.current[action.changeCat-1], description: action.changeDesc}
+      state[action.oldTas] = {name: action.changeName, category: (cat.current[action.changeCat-1] || 'none'), description: action.changeDesc}
       sessionStorage.setItem('tasks', JSON.stringify([...state]));
       return [...state];
     }
@@ -54,6 +56,7 @@ const Task = (tasks) => {
 
   // calls reducer function to edit the task
   function editTask(){
+    console.log(editCat.current.value)
     dispatch({type: 'edit', changeName: editName.current.value, changeCat: editCat.current.value, changeDesc: editDesc.current.value, oldTas: old.current.value});
   }
 
@@ -80,10 +83,10 @@ const Task = (tasks) => {
   return (
     <>
     {/* hides the task form until the plus button is clicked */}
-      {!panel ? <FaCirclePlus onClick={()=>setPanel(true)}/> : 
+      {/* {!panel ? <FaCirclePlus onClick={()=>setPanel(true)}/> :  */}
         <>
           <section className='categorySection'>
-            <IoCloseCircle onClick={()=>setPanel(false)}></IoCloseCircle>
+            {/* <IoCloseCircle onClick={()=>setPanel(false)}></IoCloseCircle> */}
             <div className="categoryCont">
               <div className="categoryBtn">
                 <button onClick={()=>setCreateForm(true)}>Create</button>
@@ -141,7 +144,8 @@ const Task = (tasks) => {
               }
             </div>
           </section>
-        </>}      
+        </>
+      {/* }       */}
     </>
   )
 }
