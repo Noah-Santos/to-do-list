@@ -28,21 +28,24 @@ function App() {
             {categoryForm ? <Category categors={category}/> : <Task tasks={task}/>}
           </div>
         }
-        
-        {/* determines whether or not to sort the tasks by category */}
-        {sort ? 
-          <div>
 
+        <button onClick={()=>setSort(true)}>Sort by Category</button>
+        <button onClick={()=>setSort(false)}>Unsort</button>
+        <Item tasks={task} categors={category} type={sort}></Item>
+        {/* determines whether or not to sort the tasks by category */}
+        {/* {sort ? 
+          <div>
+            <Item tasks={task} categors={category} type={sort}></Item>
           </div> : 
           <div>
-
+            <Item tasks={task} categors={category} type={sort}></Item>
           </div>
-        }
-        {task.map((t, i)=>{
+        } */}
+        {/* {task.map((t, i)=>{
           return (
             <Item key={i} tasks={t}></Item>
           )
-        })}
+        })} */}
       </div>
     </div>
   );
