@@ -1,6 +1,4 @@
 import {useReducer, useState, useRef} from 'react';
-import { FaCirclePlus } from "react-icons/fa6";
-import { IoCloseCircle } from "react-icons/io5";
 
 const Task = (tasks) => {
   const cat = useRef(null)
@@ -10,23 +8,21 @@ const Task = (tasks) => {
     // creates the task
     if(action.type === 'create'){
       let newTask = {name: action.tasName, category: (cat.current[action.tasCat-1] || 'none'), description: action.tasDesc}
-      // checks for a none category
-      // if(Number(action.tasCat) === 0){
-      //   newTask = {...newTask, category: 'none'}
-      // }
+      // updates storage variable
       sessionStorage.setItem('tasks', JSON.stringify([...state, newTask]));
       return [...state, newTask];
     }
     // edits the task
     if(action.type === 'edit'){
-      console.log(action.changeCat)
       state[action.oldTas] = {name: action.changeName, category: (cat.current[action.changeCat-1] || 'none'), description: action.changeDesc}
+      // updates storage variable
       sessionStorage.setItem('tasks', JSON.stringify([...state]));
       return [...state];
     }
     // deletes the task
     if(action.type === 'delete'){
       let newTasks = state.filter((c, i)=> Number(i) !== Number(action.removeTas-1));
+      // updates storage variable
       sessionStorage.setItem('tasks', JSON.stringify([...newTasks]));
       return [...newTasks];
     }
@@ -34,7 +30,6 @@ const Task = (tasks) => {
   }
 
   const [state, dispatch] = useReducer(reducer, tasks.tasks);
-  const [panel, setPanel] = useState(false);
   const [createForm, setCreateForm] = useState(true);
   const old = useRef(null);
   const createName = useRef(null);
@@ -49,6 +44,7 @@ const Task = (tasks) => {
     if(createName.current.value && createCat.current.value && createDesc.current.value){
       dispatch({type: 'create', tasName: createName.current.value, tasCat: createCat.current.value, tasDesc: createDesc.current.value});
     }
+    // resets inputs
     createName.current.value = '';
     createCat.current.value = '';
     createDesc.current.value = '';
@@ -56,13 +52,13 @@ const Task = (tasks) => {
 
   // calls reducer function to edit the task
   function editTask(){
-    console.log(editCat.current.value)
     dispatch({type: 'edit', changeName: editName.current.value, changeCat: editCat.current.value, changeDesc: editDesc.current.value, oldTas: old.current.value});
   }
 
   // calls reducer function to delete the task
   function deleteTask(){
     dispatch({type: 'delete', removeTas: old.current.value});
+    // resets inputs
     editName.current.value = state[0].name;
     editCat.current.value = state[0].category;
     editDesc.current.value = state[0].description;
@@ -70,82 +66,85 @@ const Task = (tasks) => {
 
   // everytime a new dropdown is chosen, update the input element
   function updateEdit(){
-  for(let i = 0; i < cat.current.length; i++){
-    if(cat.current[i] === state[old.current.value].category){
-      editCat.current.value = i;
+    // updates the dropdown for category
+    editCat.current.value = 0;
+    for(let i = 0; i < cat.current.length; i++){
+      if(cat.current[i] === state[old.current.value].category){
+        editCat.current.value = i+1;
+      }
     }
-  }
     editName.current.value = state[old.current.value].name;
-    // editCat.current.value = old.current.value;
     editDesc.current.value = state[old.current.value].description;
   }
 
   return (
     <>
-    {/* hides the task form until the plus button is clicked */}
-      {/* {!panel ? <FaCirclePlus onClick={()=>setPanel(true)}/> :  */}
-        <>
-          <section className='categorySection'>
-            {/* <IoCloseCircle onClick={()=>setPanel(false)}></IoCloseCircle> */}
-            <div className="categoryCont">
-              <div className="categoryBtn">
-                <button onClick={()=>setCreateForm(true)}>Create</button>
-                <button onClick={()=>setCreateForm(false)}>Edit</button>
-              </div>
-              {/* determines whether or not to show the create task page or the edit task page */}
-              {createForm ? 
-                <div className="createCat">
-                  <input ref={createName} placeholder='Name'/>
-                  <input ref={createDesc} placeholder='Description'/>
-                  {/* <input ref={createCat} placeholder='Category'/> */}
-                  <label htmlFor="categories">Choose a Category:</label>
+      <>
+        <section className='categorySection'>
+          <div className="categoryCont">
+            {/* used to navigate between the create and edit form */}
+            <div className="categoryBtn">
+              <button onClick={()=>setCreateForm(true)}>Create</button>
+              <button onClick={()=>setCreateForm(false)}>Edit</button>
+            </div>
 
-                  <select name="categories" id="categories" ref={createCat}>
-                    <option value={0}>none</option>
-                    {cat.current.map((t, i)=>{
-                      return(
-                        <option value={i+1} key={i}>{t}</option>
-                      )
-                    })}
-                  </select>
-                  <button onClick={createTask}>Create Task</button>
-                  {state.map((t, i)=>{
-                    return (
-                      <h1 key={i}>{t.name}: {t.description} - {t.category}</h1>
+            {/* determines whether or not to show the create task page or the edit task page */}
+            {createForm ? 
+              <div className="createCat">
+                {/* inputs for name and description */}
+                <input ref={createName} placeholder='Name'/>
+                <input ref={createDesc} placeholder='Description'/>
+                {/* makes sure that the user selects a valid category using a dropdown */}
+                <label htmlFor="categories">Choose a Category:</label>
+                <select name="categories" id="categories" ref={createCat}>
+                  <option value={0}>none</option>
+                  {cat.current.map((t, i)=>{
+                    return(
+                      <option value={i+1} key={i}>{t}</option>
                     )
                   })}
-                </div> :
-                <div className="editCat">
-                  <label htmlFor="categories">Choose a Task:</label>
+                </select>
+                {/* create task */}
+                <button onClick={createTask}>Create Task</button>
+                {/* displays exising tasks */}
+                {state.map((t, i)=>{
+                  return (
+                    <h1 key={i}>{t.name}: {t.description} - {t.category}</h1>
+                  )
+                })}
+              </div> :
 
-                  <select name="categories" id="categories" ref={old} onChange={updateEdit}>
-                    {state.map((t, i)=>{
-                      return(
-                        <option value={i} key={i}>{t.name}</option>
-                      )
-                    })}
-                  </select>
+              <div className="editCat">
+                {/* allows the user to select the desired task */}
+                <label htmlFor="categories">Choose a Task:</label>
+                <select name="categories" id="categories" ref={old} onChange={updateEdit}>
+                  {state.map((t, i)=>{
+                    return(
+                      <option value={i} key={i}>{t.name}</option>
+                    )
+                  })}
+                </select>
 
-                  <input placeholder='New Name' ref={editName} onChange={editTask}/>
-                  {/* <input placeholder='Edit' ref={editCat} onChange={editTask}/> */}
-                  <input placeholder='New Description' ref={editDesc} onChange={editTask}/>
-                  <label htmlFor="categories">Choose a Category:</label>
-
-                  <select name="categories" id="categories" ref={editCat} onChange={editTask}>
-                    <option value={0}>none</option>
-                    {cat.current.map((t, i)=>{
-                      return(
-                        <option value={i+1} key={i}>{t}</option>
-                      )
-                    })}
-                  </select>
-                  <button onClick={deleteTask}>Delete Category</button>
-                </div>
-              }
-            </div>
-          </section>
-        </>
-      {/* }       */}
+                {/* inputs for editing */}
+                <input placeholder='New Name' ref={editName} onChange={editTask}/>
+                <input placeholder='New Description' ref={editDesc} onChange={editTask}/>
+                {/* makes sure that the user selects a valid category by using a dropdown */}
+                <label htmlFor="categories">Choose a Category:</label>
+                <select name="categories" id="categories" ref={editCat} onChange={editTask}>
+                  <option value={0}>none</option>
+                  {cat.current.map((t, i)=>{
+                    return(
+                      <option value={i+1} key={i}>{t}</option>
+                    )
+                  })}
+                </select>
+                {/* deletes the task */}
+                <button onClick={deleteTask}>Delete Category</button>
+              </div>
+            }
+          </div>
+        </section>
+      </>
     </>
   )
 }

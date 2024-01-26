@@ -28,6 +28,7 @@ function App() {
             {categoryForm ? <Category categors={category}/> : <Task tasks={task}/>}
           </div>
         }
+        
         {/* determines whether or not to sort the tasks by category */}
         {sort ? 
           <div>
