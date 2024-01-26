@@ -4,9 +4,7 @@ import { IoCloseCircle } from "react-icons/io5";
 
 const Task = (tasks) => {
   const cat = useRef(null)
-  cat.current = (JSON.parse(sessionStorage.getItem('categories')));
-  console.log(cat.current)
-  console.log(cat.current[0])
+  cat.current = (JSON.parse(sessionStorage.getItem('categories')) || ['sure']);
   
   function reducer(state, action){
     // creates the task
@@ -31,10 +29,6 @@ const Task = (tasks) => {
       return [...newTasks];
     }
     return [...state];
-  }
-
-  function first(){
-
   }
 
   const [state, dispatch] = useReducer(reducer, tasks.tasks);
