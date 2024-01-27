@@ -82,12 +82,13 @@ const Category = (categors) => {
           {createForm ? 
             <div className="createCat">
               <input placeholder='create' ref={creating} className='input'/>
+              <br />
               <button onClick={createCat} className='createBtn'>Create Category</button>
               <article>
                 {/* displays the categories that exist already */}
                 {state.map((category, i)=>{
                   return(
-                    <h1 key={i}>{category}</h1>
+                    <p key={i}>{category}</p>
                   )
                 })}
               </article>
@@ -105,6 +106,7 @@ const Category = (categors) => {
               </select>
               {/* input to enter new value */}
               <input placeholder='Edit' ref={editing} onChange={editCat} className='input'/>
+              <br />
               {/* delete the category */}
               <button onClick={deleteCat} className='deleteBtn'>Delete Category</button>
             </div>

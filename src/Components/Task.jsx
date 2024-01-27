@@ -85,23 +85,24 @@ const Task = (tasks) => {
   return (
     <>
       <>
-        <section className='categorySection'>
-          <div className="categoryCont">
+        <section className='taskSection'>
+          <div className="taskCont">
             {/* used to navigate between the create and edit form */}
-            <div className="categoryBtn">
-              <button onClick={()=>setCreateForm(true)}>Create</button>
-              <button onClick={()=>setCreateForm(false)}>Edit</button>
+            <div className="taskBtn">
+              <button onClick={()=>setCreateForm(true)} className='btn'>Create</button>
+              <button onClick={()=>setCreateForm(false)} className='btn'>Edit</button>
             </div>
 
             {/* determines whether or not to show the create task page or the edit task page */}
             {createForm ? 
-              <div className="createCat">
+              <div className="createTask">
                 {/* inputs for name and description */}
-                <input ref={createName} placeholder='Name'/>
-                <input ref={createDesc} placeholder='Description'/>
+                <input ref={createName} placeholder='Name' className='input'/>
+                <input ref={createDesc} placeholder='Description' className='input'/>
+                <br />
                 {/* makes sure that the user selects a valid category using a dropdown */}
-                <label htmlFor="categories">Choose a Category:</label>
-                <select name="categories" id="categories" ref={createCat}>
+                <label htmlFor="tasks" className='label'>Choose a Category:</label>
+                <select name="tasks" id="tasks" ref={createCat} className='dropdown'>
                   <option value={0}>none</option>
                   {cat.current.map((t, i)=>{
                     return(
@@ -109,20 +110,21 @@ const Task = (tasks) => {
                     )
                   })}
                 </select>
+                <br />
                 {/* create task */}
-                <button onClick={createTask}>Create Task</button>
+                <button onClick={createTask} className='createBtn'>Create Task</button>
                 {/* displays exising tasks */}
                 {state.map((t, i)=>{
                   return (
-                    <h1 key={i}>{t.name}: {t.description} - {t.category}</h1>
+                    <p key={i}>{t.name}: {t.description} - {t.category}</p>
                   )
                 })}
               </div> :
 
-              <div className="editCat">
+              <div className="editTask">
                 {/* allows the user to select the desired task */}
-                <label htmlFor="categories">Choose a Task:</label>
-                <select name="categories" id="categories" ref={old} onChange={updateEdit}>
+                <label htmlFor="task" className='label'>Choose a Task:</label>
+                <select name="task" id="task" ref={old} onChange={updateEdit} className='dropdown'>
                   {state.map((t, i)=>{
                     return(
                       <option value={i} key={i}>{t.name}</option>
@@ -131,11 +133,12 @@ const Task = (tasks) => {
                 </select>
 
                 {/* inputs for editing */}
-                <input placeholder='New Name' ref={editName} onChange={editTask}/>
-                <input placeholder='New Description' ref={editDesc} onChange={editTask}/>
+                <input placeholder='New Name' ref={editName} onChange={editTask} className='input'/>
+                <input placeholder='New Description' ref={editDesc} onChange={editTask} className='input'/>
                 {/* makes sure that the user selects a valid category by using a dropdown */}
-                <label htmlFor="categories">Choose a Category:</label>
-                <select name="categories" id="categories" ref={editCat} onChange={editTask}>
+                <br />
+                <label htmlFor="tas" className='label'>Choose a Category:</label>
+                <select name="tas" id="tas" ref={editCat} onChange={editTask}  className='dropdown'>
                   <option value={0}>none</option>
                   {cat.current.map((t, i)=>{
                     return(
@@ -143,8 +146,9 @@ const Task = (tasks) => {
                     )
                   })}
                 </select>
+                <br />
                 {/* deletes the task */}
-                <button onClick={deleteTask}>Delete Category</button>
+                <button onClick={deleteTask} className='deleteBtn'>Delete Category</button>
               </div>
             }
           </div>

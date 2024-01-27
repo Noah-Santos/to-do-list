@@ -13,7 +13,7 @@ html {
 }
 
 body {
-  background-color: rgb(11, 11, 11);
+  background-color: rgb(20, 20, 20);
 }
 body #root {
   height: 100%;
@@ -34,7 +34,7 @@ body #root .bodySection {
   align-items: center;
 }
 .categorySection .categoryCont {
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -81,6 +81,7 @@ body #root .bodySection {
 }
 .categorySection .categoryCont .editCat .label {
   font-size: 1.25rem;
+  margin-right: 0.5rem;
 }
 .categorySection .categoryCont .editCat .dropdown {
   color: black;
@@ -88,6 +89,90 @@ body #root .bodySection {
   font-size: 1.15rem;
 }
 .categorySection .categoryCont .editCat .deleteBtn {
+  border: none;
+  background-color: transparent;
+  padding: 0.35rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background-color: rgb(69, 69, 69);
+}
+
+.taskSection {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.taskSection .taskCont {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.taskSection .taskCont .taskBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 75%;
+}
+.taskSection .taskCont .taskBtn .btn {
+  border: none;
+  background-color: transparent;
+  padding: 0.35rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  border-radius: 0.5rem;
+  font-size: 1.25rem;
+  background-color: rgb(69, 69, 69);
+}
+.taskSection .taskCont .createTask .input {
+  color: black;
+  font-size: 1rem;
+  margin: 0.25rem;
+}
+.taskSection .taskCont .createTask .createBtn {
+  border: none;
+  background-color: transparent;
+  padding: 0.35rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background-color: rgb(69, 69, 69);
+}
+.taskSection .taskCont .createTask .label {
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+}
+.taskSection .taskCont .createTask .dropdown {
+  color: black;
+  padding: 0.1rem;
+  font-size: 1.15rem;
+}
+.taskSection .taskCont .editTask .input {
+  color: black;
+  font-size: 1rem;
+  margin: 0.25rem;
+}
+.taskSection .taskCont .editTask .label {
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+}
+.taskSection .taskCont .editTask .dropdown {
+  color: black;
+  padding: 0.1rem;
+  font-size: 1.15rem;
+}
+.taskSection .taskCont .editTask .deleteBtn {
   border: none;
   background-color: transparent;
   padding: 0.35rem;
@@ -120,7 +205,7 @@ body #root .bodySection {
 }
 .bodySection .content .formSection {
   margin: 2rem;
-  background-color: rgb(6, 33, 111);
+  background-color: rgb(3, 18, 64);
   width: 30%;
   padding: 1rem;
   border-radius: 0.5rem;
