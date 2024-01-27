@@ -31,14 +31,16 @@ function App() {
           </>
         }
 
-        <button onClick={()=>setSort(true)}>Sort by Category</button>
-        <button onClick={()=>setSort(false)}>Unsort</button>
+        <div className="organizeCont">
+          <button onClick={()=>setSort(true)} className='btn'>Sort by Category</button>
+          <button onClick={()=>setSort(false)} className='btn'>Unsort</button>
+        </div>
         {/* determines whether or not to sort the tasks by category */}
         {sort ? 
-          <div>
+          <div className='cont'>
             <Item tasks={task} categors={category} type={true}></Item>
           </div> : 
-          <div>
+          <div className='cont'>
             <Item tasks={task} categors={category} type={false}></Item>
           </div>
         }

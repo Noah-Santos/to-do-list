@@ -100,7 +100,7 @@ const Category = (categors) => {
               <select name="categories" id="categories" ref={old} onChange={updateEdit} className='dropdown'>
                 {state.map((category, i)=>{
                   return(
-                    <option value={i} key={i}>{category}</option>
+                    <option value={i} key={i} className='option'>{category}</option>
                   )
                 })}
               </select>

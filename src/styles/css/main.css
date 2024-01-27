@@ -88,6 +88,9 @@ body #root .bodySection {
   padding: 0.1rem;
   font-size: 1.15rem;
 }
+.categorySection .categoryCont .editCat .dropdown .option {
+  color: black;
+}
 .categorySection .categoryCont .editCat .deleteBtn {
   border: none;
   background-color: transparent;
@@ -158,6 +161,9 @@ body #root .bodySection {
   padding: 0.1rem;
   font-size: 1.15rem;
 }
+.taskSection .taskCont .createTask .dropdown .option {
+  color: black;
+}
 .taskSection .taskCont .editTask .input {
   color: black;
   font-size: 1rem;
@@ -172,6 +178,9 @@ body #root .bodySection {
   padding: 0.1rem;
   font-size: 1.15rem;
 }
+.taskSection .taskCont .editTask .dropdown .option {
+  color: black;
+}
 .taskSection .taskCont .editTask .deleteBtn {
   border: none;
   background-color: transparent;
@@ -185,11 +194,90 @@ body #root .bodySection {
   background-color: rgb(69, 69, 69);
 }
 
+.cont {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cont .unorganizedList {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cont .unorganizedList .item {
+  background-color: rgb(43, 43, 43);
+  margin: 0.5rem;
+  padding: 0.5rem;
+  width: 75%;
+  border-radius: 0.5rem;
+}
+.cont .unorganizedList .item .taskTitle {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+.cont .unorganizedList .item .line {
+  width: 95%;
+}
+.cont .unorganizedList .item .taskDescription {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.cont .organizedList {
+  width: 45%;
+}
+.cont .organizedList .catSection {
+  background-color: rgb(43, 43, 43);
+  margin: 1.5rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+.cont .organizedList .catSection .catTitle {
+  font-size: 2rem;
+  font-weight: strong;
+}
+.cont .organizedList .catSection .organizedTasks .info {
+  margin: 0.5rem;
+  background-color: rgb(69, 69, 69);
+  border-radius: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.cont .organizedList .catSection .organizedTasks .info .taskTitle {
+  font-weight: strong;
+  font-size: 1.5rem;
+}
+.cont .organizedList .catSection .organizedTasks .info .taskDescription {
+  font-size: 1.25rem;
+}
+
 .bodySection .content {
+  padding-top: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+.bodySection .content .organizeCont {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 75%;
+}
+.bodySection .content .organizeCont .btn {
+  border: none;
+  background-color: transparent;
+  padding: 0.35rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  border-radius: 0.5rem;
+  font-size: 1.25rem;
+  background-color: rgb(69, 69, 69);
 }
 .bodySection .content .openBtn {
   font-size: 1.5rem;

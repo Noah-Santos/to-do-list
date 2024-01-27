@@ -1,20 +1,11 @@
 const Item = ({tasks, categors, type}) => {
-  // console.log('tasks: ')
-  // console.log(tasks)
-  // console.log("categors: ")
-  // console.log(categors)
-  // console.log(type)
-
-  // const unorganized = useRef([]);
-
-
   // returns the unorganized list
   if(!type){
     return(
       <div className='unorganizedList'>
         {tasks.map((task, i)=>{
           return (
-              <div key={i}>
+              <div key={i} className="item">
                 <p className="taskTitle">{task.name} - {task.category}</p>
                 <p className="taskDescription">{task.description}</p>
               </div>
@@ -28,13 +19,14 @@ const Item = ({tasks, categors, type}) => {
     <div className='organizedList'>
         {categors.map((cat, x)=>{
           return (
-            <div key={x}>
-              <h1>{cat}</h1>
+            <div key={x} className="catSection">
+              <h1 className="catTitle">{cat}</h1>
+              <hr className="line" />
               <div className='organizedTasks'>
                 {tasks.map((task, i)=>{
                   if(task.category === cat){
                     return (
-                      <div key={i}>
+                      <div key={i} className="info">
                         <p className="taskTitle">{task.name} - <span className="taskDescription">{task.description}</span></p>
                     </div>
                     )

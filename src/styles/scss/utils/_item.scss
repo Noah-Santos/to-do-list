@@ -1,0 +1,74 @@
+.cont{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .unorganizedList {
+        width: 45%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .item {
+            background-color: rgb(43, 43, 43);
+            margin: 0.5rem;
+            padding: 0.5rem;
+            width: 75%;
+            border-radius: 0.5rem;
+
+            .taskTitle {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .line {
+                width: 95%;
+            }
+
+            .taskDescription {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
+
+    .organizedList {
+        width: 45%;
+
+        .catSection {
+            background-color: rgb(43, 43, 43);
+            margin: 1.5rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+
+            .catTitle {
+                font-size: 2rem;
+                font-weight: strong;
+            }
+
+            .organizedTasks {
+                .info {
+                    margin: 0.5rem;
+                    background-color: rgb(69, 69, 69);
+                    border-radius: 0.5rem;
+                    padding: {
+                        top: 1rem;
+                        bottom: 1rem;
+                        left: 1rem;
+                        right: 1rem;
+                    };
+
+                    .taskTitle {
+                        font-weight: strong;
+                        font-size: 1.5rem;
+                    }
+
+                    .taskDescription {
+                        font-size: 1.25rem;
+                    }
+                }
+            }
+        }
+    }
+}

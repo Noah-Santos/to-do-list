@@ -106,7 +106,7 @@ const Task = (tasks) => {
                   <option value={0}>none</option>
                   {cat.current.map((t, i)=>{
                     return(
-                      <option value={i+1} key={i}>{t}</option>
+                      <option value={i+1} key={i} className='option'>{t}</option>
                     )
                   })}
                 </select>
@@ -127,7 +127,7 @@ const Task = (tasks) => {
                 <select name="task" id="task" ref={old} onChange={updateEdit} className='dropdown'>
                   {state.map((t, i)=>{
                     return(
-                      <option value={i} key={i}>{t.name}</option>
+                      <option value={i} key={i} className='option'>{t.name}</option>
                     )
                   })}
                 </select>
