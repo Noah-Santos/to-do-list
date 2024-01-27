@@ -22,14 +22,38 @@
         .formSection{
             margin: 2rem;
             background-color: rgb(6, 33, 111);
-            width: 40%;
+            width: 30%;
             padding: 1rem;
             border-radius: 0.5rem;
+            position: absolute;
+            top: 10rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             
             .decideBtn{
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
+
+                .btn {
+                        border: none;
+                        background-color: transparent;
+                        padding: 0.35rem;
+                        margin: {
+                            top: 0.5rem;
+                            bottom: 0.5rem;
+                            left: 0.25rem;
+                            right: 0.25rem;
+                        };
+                        border-radius: 0.5rem;
+                        font-size: 1.25rem;
+                        background-color: rgb(43, 43, 43);
+                    }
+            }
+
+            .line{
+                width: 95%;
             }
         }
     }

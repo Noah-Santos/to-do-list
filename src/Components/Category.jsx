@@ -71,49 +71,46 @@ const Category = (categors) => {
 
   return (
     <>
-      <>
-        <section className='categorySection'>
-          <div className="categoryCont">
-            {/* used to navigate between the create and edit form */}
-            <div className="categoryBtn">
-              <button onClick={()=>setCreateForm(true)}>Create</button>
-              <button onClick={()=>setCreateForm(false)}>Edit</button>
-            </div>
-
-            {/* determines whether or not to show the create category page or the edit category page */}
-            {createForm ? 
-              <div className="createCat">
-                <input placeholder='create' ref={creating}/>
-                <button onClick={createCat}>Create Category</button>
-                <article>
-                  {/* displays the categories that exist already */}
-                  {state.map((category, i)=>{
-                    return(
-                      <h1 key={i}>{category}</h1>
-                    )
-                  })}
-                </article>
-              </div> :
-
-              <div className="editCat">
-                {/* lets user select the category they want to edit */}
-                <label htmlFor="categories">Choose a Category:</label>
-                <select name="categories" id="categories" ref={old} onChange={updateEdit}>
-                  {state.map((category, i)=>{
-                    return(
-                      <option value={i} key={i}>{category}</option>
-                    )
-                  })}
-                </select>
-                {/* input to enter new value */}
-                <input placeholder='Edit' ref={editing} onChange={editCat}/>
-                {/* delete the category */}
-                <button onClick={deleteCat}>Delete Category</button>
-              </div>
-            }
+      <section className='categorySection'>
+        <div className="categoryCont">
+          {/* used to navigate between the create and edit form */}
+          <div className="categoryBtn">
+            <button onClick={()=>setCreateForm(true)} className='btn'>Create</button>
+            <button onClick={()=>setCreateForm(false)} className='btn'>Edit</button>
           </div>
-        </section>
-      </>
+          {/* determines whether or not to show the create category page or the edit category page */}
+          {createForm ? 
+            <div className="createCat">
+              <input placeholder='create' ref={creating} className='input'/>
+              <button onClick={createCat} className='createBtn'>Create Category</button>
+              <article>
+                {/* displays the categories that exist already */}
+                {state.map((category, i)=>{
+                  return(
+                    <h1 key={i}>{category}</h1>
+                  )
+                })}
+              </article>
+            </div> :
+
+            <div className="editCat">
+              {/* lets user select the category they want to edit */}
+              <label htmlFor="categories" className='label'>Choose a Category:</label>
+              <select name="categories" id="categories" ref={old} onChange={updateEdit} className='dropdown'>
+                {state.map((category, i)=>{
+                  return(
+                    <option value={i} key={i}>{category}</option>
+                  )
+                })}
+              </select>
+              {/* input to enter new value */}
+              <input placeholder='Edit' ref={editing} onChange={editCat} className='input'/>
+              {/* delete the category */}
+              <button onClick={deleteCat} className='deleteBtn'>Delete Category</button>
+            </div>
+          }
+        </div>
+      </section>
     </>
   )
 }

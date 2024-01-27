@@ -13,13 +13,17 @@ html {
 }
 
 body {
-  background-color: rgb(95, 95, 95);
+  background-color: rgb(11, 11, 11);
 }
 body #root {
   height: 100%;
 }
 body #root .bodySection {
   height: 100%;
+}
+
+* {
+  color: white;
 }
 
 .categorySection {
@@ -31,13 +35,69 @@ body #root .bodySection {
 }
 .categorySection .categoryCont {
   width: 50%;
-  background-color: royalblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .categorySection .categoryCont .categoryBtn {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   width: 75%;
+}
+.categorySection .categoryCont .categoryBtn .btn {
+  border: none;
+  background-color: transparent;
+  padding: 0.35rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  border-radius: 0.5rem;
+  font-size: 1.25rem;
+  background-color: rgb(69, 69, 69);
+}
+.categorySection .categoryCont .createCat .input {
+  color: black;
+  font-size: 1rem;
+  margin: 0.25rem;
+}
+.categorySection .categoryCont .createCat .createBtn {
+  border: none;
+  background-color: transparent;
+  padding: 0.35rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background-color: rgb(69, 69, 69);
+}
+.categorySection .categoryCont .editCat .input {
+  color: black;
+  font-size: 1rem;
+  margin: 0.25rem;
+}
+.categorySection .categoryCont .editCat .label {
+  font-size: 1.25rem;
+}
+.categorySection .categoryCont .editCat .dropdown {
+  color: black;
+  padding: 0.1rem;
+  font-size: 1.15rem;
+}
+.categorySection .categoryCont .editCat .deleteBtn {
+  border: none;
+  background-color: transparent;
+  padding: 0.35rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background-color: rgb(69, 69, 69);
 }
 
 .bodySection .content {
@@ -61,12 +121,32 @@ body #root .bodySection {
 .bodySection .content .formSection {
   margin: 2rem;
   background-color: rgb(6, 33, 111);
-  width: 40%;
+  width: 30%;
   padding: 1rem;
   border-radius: 0.5rem;
+  position: absolute;
+  top: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .bodySection .content .formSection .decideBtn {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+.bodySection .content .formSection .decideBtn .btn {
+  border: none;
+  background-color: transparent;
+  padding: 0.35rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  border-radius: 0.5rem;
+  font-size: 1.25rem;
+  background-color: rgb(43, 43, 43);
+}
+.bodySection .content .formSection .line {
+  width: 95%;
 }/*# sourceMappingURL=main.css.map */

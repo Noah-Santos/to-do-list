@@ -21,9 +21,10 @@ function App() {
             <IoCloseCircle onClick={()=>setPanel(false)} className='closeBtn'></IoCloseCircle>
             <div className='formSection'>
               <div className="decideBtn">
-                <button onClick={()=>setCategoryForm(true)}>Categories</button>
-                <button onClick={()=>setCategoryForm(false)}>Tasks</button>
+                <button onClick={()=>setCategoryForm(true)} className='btn'>Categories</button>
+                <button onClick={()=>setCategoryForm(false)} className='btn'>Tasks</button>
               </div>
+              <hr className='line'/>
               {/* determines which form should show */}
               {categoryForm ? <Category categors={category}/> : <Task tasks={task}/>}
             </div>
